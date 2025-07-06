@@ -1,0 +1,7 @@
+app = "taskmanager-staging"
+
+[env]
+  PORT = "8080"
+
+[experimental]
+  auto_rollback = true
