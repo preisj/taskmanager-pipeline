@@ -10,7 +10,8 @@ def create_app():
 
     db.init_app(app)
 
-    from .routes import main
-    app.register_blueprint(main)
+    from .routes import task_bp
+    app.register_blueprint(task_bp)
+
 
     return app
