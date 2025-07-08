@@ -9,12 +9,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Set PYTHONPATH
+        run: echo "PYTHONPATH=." >> $GITHUB_ENV
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - run: |
+
+      - name: Install dependencies
+        run: |
           pip install -r requirements.txt
-          pytest --cov=app
+
+      - name: Run tests with coverage
+        run: pytest --cov=app
 
   deploy-staging:
     needs: test
@@ -27,7 +35,7 @@ jobs:
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 
-  deploy-production:
+  deploy-prod:
     if: github.ref == 'refs/heads/main'
     needs: deploy-staging
     runs-on: ubuntu-latest
